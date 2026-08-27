@@ -14,6 +14,7 @@ without blocking your PR.
 | `clippy` | Advisory (`continue-on-error: true`) | Lints are useful but subjective enough that a maintainer should decide case-by-case, not have every PR blocked by a new upstream lint. |
 | `audit` | Advisory (`continue-on-error: true`) | A new upstream dependency CVE should notify maintainers, not fail every open PR the moment it's published. |
 | `wasm-size` | Advisory (`continue-on-error: true`) | Reports binary size for visibility; see below. |
+| `sdk-ts` | Advisory (`continue-on-error: true`) | Builds and smoke-tests `packages/sdk-ts` (the TypeScript SDK scaffold, backlog 0151). Advisory until backlog 0187 adds a dedicated typecheck/lint job with its own required/advisory split. |
 
 `ci-required` is the single check branch protection should require — it
 passes only when `format`, `test`, `build-wasm`, and `bot` all succeed, and

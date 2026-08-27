@@ -402,6 +402,36 @@ jobs:
         run: npm run lint
 
   # ───────────────────────────────────────────────────────────────────────────
+  # ADVISORY — the TypeScript SDK package (packages/sdk-ts). It is a scaffold
+  # today (backlog 0151 / epic E12): no typed client logic yet, just the
+  # ESM/CJS/.d.ts build pipeline. Advisory rather than required until the
+  # dedicated typecheck/lint job (backlog 0187) establishes the same
+  # required/advisory split this repo already has on the Rust side.
+  # ───────────────────────────────────────────────────────────────────────────
+  sdk-ts:
+    name: SDK (TypeScript) (advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: packages/sdk-ts
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build (ESM + CJS + declarations)
+        run: npm run build
+
+      - name: Run smoke tests
+        run: npm test
+
+  # ───────────────────────────────────────────────────────────────────────────
   # Aggregate gate. Branch protection should require only this single check;
   # it passes when all REQUIRED jobs pass and ignores advisory outcomes.
   # ───────────────────────────────────────────────────────────────────────────
